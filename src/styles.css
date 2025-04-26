@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+/* Placeholder text styling for all inputs */
+::placeholder {
+  color: #9ca3af !important; /* Light gray color (Tailwind's gray-400) */
+  opacity: 1;
+}
+
+/* For older browsers */
+::-webkit-input-placeholder {
+  color: #9ca3af !important;
+}
+
+::-moz-placeholder {
+  color: #9ca3af !important;
+}
+
+:-ms-input-placeholder {
+  color: #9ca3af !important;
+}
+
+:-moz-placeholder {
+  color: #9ca3af !important;
+}

@@ -1,0 +1,19 @@
+<div class="main-layout">
+  <app-header></app-header>
+
+  <div class="layout-container">
+    <app-sidebar *ngIf="showSidebar"></app-sidebar>
+
+    <main class="content-area">
+      <div class="page-header" *ngIf="showBackButton">
+        <button class="back-button" (click)="goBack()"><span class="back-icon">←</span> Back</button>
+      </div>
+
+      <div class="content">
+        <ng-content></ng-content>
+      </div>
+    </main>
+  </div>
+
+  <app-footer></app-footer>
+</div>

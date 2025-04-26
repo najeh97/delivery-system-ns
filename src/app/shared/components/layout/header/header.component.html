@@ -1,0 +1,22 @@
+<header class="app-header">
+  <div class="container">
+    <div class="logo">
+      <a routerLink="/">Delivery System</a>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+        <li><a routerLink="/login" *ngIf="!isLoggedIn">Login</a></li>
+        <li><a routerLink="/register" *ngIf="!isLoggedIn">Register</a></li>
+        <li class="dropdown" *ngIf="isLoggedIn">
+          <a href="javascript:void(0)">My Account</a>
+          <div class="dropdown-content">
+            <a [routerLink]="getDashboardLink()">Dashboard</a>
+            <a [routerLink]="getProfileLink()">Profile</a>
+            <a href="javascript:void(0)" (click)="logout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

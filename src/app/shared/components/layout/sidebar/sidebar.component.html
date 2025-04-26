@@ -1,0 +1,75 @@
+<div class="sidebar">
+  <!-- Show user info only when logged in -->
+  <div class="user-info" *ngIf="user">
+    <div class="user-avatar">
+      <span>{{ getUserInitials() }}</span>
+    </div>
+    <div class="user-details">
+      <h3>{{ getUserFullName() }}</h3>
+      <p>{{ getUserRoleLabel() }}</p>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <!-- Show login/register links when not logged in -->
+    <div class="login-links" *ngIf="!user">
+      <h4>Authentication</h4>
+      <ul>
+        <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+      </ul>
+    </div>
+
+    <!-- Admin Links -->
+    <div *ngIf="userType === UserType.Admin">
+      <h4>Admin Dashboard</h4>
+      <ul>
+        <li><a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/admin/clients" routerLinkActive="active">Manage Clients</a></li>
+        <li><a routerLink="/admin/drivers" routerLinkActive="active">Manage Drivers</a></li>
+        <li><a routerLink="/admin/customers" routerLinkActive="active">Manage Customers</a></li>
+        <li><a routerLink="/admin/requests" routerLinkActive="active">Delivery Requests</a></li>
+      </ul>
+    </div>
+
+    <!-- Client Links -->
+    <div *ngIf="userType === UserType.Client">
+      <h4>Client Dashboard</h4>
+      <ul>
+        <li><a routerLink="/client/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/client/requests" routerLinkActive="active">My Requests</a></li>
+        <li><a routerLink="/client/drivers" routerLinkActive="active">Drivers</a></li>
+        <li><a routerLink="/client/payments" routerLinkActive="active">Payments</a></li>
+        <li><a routerLink="/client/profile" routerLinkActive="active">Profile</a></li>
+      </ul>
+    </div>
+
+    <!-- Driver Links -->
+    <div *ngIf="userType === UserType.Driver">
+      <h4>Driver Dashboard</h4>
+      <ul>
+        <li><a routerLink="/driver/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/driver/requests" routerLinkActive="active">Delivery Requests</a></li>
+        <li><a routerLink="/driver/payments" routerLinkActive="active">My Payments</a></li>
+        <li><a routerLink="/driver/profile" routerLinkActive="active">Profile</a></li>
+      </ul>
+    </div>
+
+    <!-- Customer Links -->
+    <div *ngIf="userType === UserType.Customer">
+      <h4>Customer Dashboard</h4>
+      <ul>
+        <li><a routerLink="/customer/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/customer/requests" routerLinkActive="active">My Requests</a></li>
+        <li><a routerLink="/customer/profile" routerLinkActive="active">Profile</a></li>
+      </ul>
+    </div>
+
+    <!-- Logout link visible for all logged-in users -->
+    <div class="logout-section" *ngIf="user">
+      <ul>
+        <li><a href="javascript:void(0)" (click)="logout()" class="logout-link">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
