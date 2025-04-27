@@ -1,0 +1,107 @@
+<div class="container mx-auto p-4">
+  <h1 class="mb-6 text-2xl font-bold">Add New Driver</h1>
+
+  <div *ngIf="errorMessage" class="mb-4 rounded-md bg-red-100 p-4 text-sm text-red-700">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="mb-4 rounded-md bg-green-100 p-4 text-sm text-green-700">
+    {{ successMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #driverForm="ngForm" class="max-w-lg rounded-lg bg-white p-6 shadow-md">
+    <div class="mb-4">
+      <label for="name" class="mb-2 block text-sm font-medium text-gray-700">Driver Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="driver.name"
+        required
+        class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        placeholder="John Doe"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="email" class="mb-2 block text-sm font-medium text-gray-700">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        placeholder="driver@example.com"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="phone" class="mb-2 block text-sm font-medium text-gray-700">Phone</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        [(ngModel)]="phone"
+        required
+        class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        placeholder="+1234567890"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="password" class="mb-2 block text-sm font-medium text-gray-700">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        minlength="6"
+        class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        placeholder="********"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="vehicleType" class="mb-2 block text-sm font-medium text-gray-700">Vehicle Type</label>
+      <select
+        id="vehicleType"
+        name="vehicleType"
+        [(ngModel)]="selectedVehicleType"
+        required
+        class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+      >
+        <option [ngValue]="null" disabled>Select Vehicle Type</option>
+        <option value="Car">Car</option>
+        <option value="Motorcycle">Motorcycle</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label for="modelName" class="mb-2 block text-sm font-medium text-gray-700">Vehicle Model</label>
+      <input
+        type="text"
+        id="modelName"
+        name="modelName"
+        [(ngModel)]="driver.modelName"
+        required
+        class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        placeholder="Toyota Corolla"
+      />
+    </div>
+
+    <div class="flex justify-between">
+      <button type="button" (click)="goBack()" class="rounded-md bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300">
+        Back
+      </button>
+      <button
+        type="submit"
+        [disabled]="!driverForm.form.valid || isLoading"
+        class="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:bg-blue-400"
+      >
+        {{ isLoading ? 'Adding Driver...' : 'Add Driver' }}
+      </button>
+    </div>
+  </form>
+</div>

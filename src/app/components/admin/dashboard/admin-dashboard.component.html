@@ -2,4 +2,312 @@
   <div class="mb-6 flex items-center justify-between">
     <h1 class="text-2xl font-bold">Admin Dashboard</h1>
   </div>
+
+  <!-- Stats Cards -->
+  <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+    <div class="rounded-lg border bg-white p-4 shadow-sm">
+      <h2 class="text-sm font-medium text-gray-500">Total Clients</h2>
+      <p class="mt-2 text-3xl font-semibold">{{ clients.length }}</p>
+      <div class="mt-2">
+        <span class="inline-block rounded-full bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">
+          {{ pendingClients.length }} Pending
+        </span>
+      </div>
+    </div>
+
+    <div class="rounded-lg border bg-white p-4 shadow-sm">
+      <h2 class="text-sm font-medium text-gray-500">Total Customers</h2>
+      <p class="mt-2 text-3xl font-semibold">{{ customers.length }}</p>
+    </div>
+
+    <div class="rounded-lg border bg-white p-4 shadow-sm">
+      <h2 class="text-sm font-medium text-gray-500">Total Drivers</h2>
+      <p class="mt-2 text-3xl font-semibold">{{ drivers.length }}</p>
+    </div>
+
+    <div class="rounded-lg border bg-white p-4 shadow-sm">
+      <h2 class="text-sm font-medium text-gray-500">Total Delivery Requests</h2>
+      <p class="mt-2 text-3xl font-semibold">{{ requests.length }}</p>
+      <div class="mt-2">
+        <span class="mr-1 inline-block rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-800">
+          {{ activeRequests.length }} Active
+        </span>
+        <span class="inline-block rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
+          {{ completedRequests.length }} Completed
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mb-6">
+    <h2 class="mb-3 text-xl font-semibold">Quick Actions</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
+      <a routerLink="/admin/clients" class="rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50">
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Manage Clients</h3>
+        <p class="mt-1 text-xs text-gray-500">View and approve clients</p>
+      </a>
+
+      <a
+        routerLink="/admin/customers"
+        class="rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50"
+      >
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Manage Customers</h3>
+        <p class="mt-1 text-xs text-gray-500">View customer information</p>
+      </a>
+
+      <a routerLink="/admin/drivers" class="rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50">
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100 text-purple-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Manage Drivers</h3>
+        <p class="mt-1 text-xs text-gray-500">Add and manage drivers</p>
+      </a>
+
+      <a routerLink="/admin/requests" class="rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50">
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-100 text-yellow-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Manage Requests</h3>
+        <p class="mt-1 text-xs text-gray-500">View and manage delivery requests</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- Data Management -->
+  <div class="mb-6">
+    <h2 class="mb-3 text-xl font-semibold">Data Management</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <button
+        (click)="seedStorage()"
+        class="w-full rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50"
+      >
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Seed Database</h3>
+        <p class="mt-1 text-xs text-gray-500">Generate 100 test entries for each data type</p>
+      </button>
+
+      <button
+        (click)="confirmResetStorage()"
+        class="w-full rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50"
+      >
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Reset Storage</h3>
+        <p class="mt-1 text-xs text-gray-500">Clear all data except admin user</p>
+      </button>
+
+      <button
+        (click)="resetAndSeedStorage()"
+        class="w-full rounded-lg bg-white p-4 text-center shadow-sm transition hover:bg-gray-50"
+      >
+        <div class="mb-2 flex justify-center">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100 text-purple-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+              />
+            </svg>
+          </span>
+        </div>
+        <h3 class="font-medium">Reset & Seed</h3>
+        <p class="mt-1 text-xs text-gray-500">Reset and add fresh test data</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="mb-6">
+    <h2 class="mb-3 text-xl font-semibold">Recent Delivery Requests</h2>
+    <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">ID</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Date</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Client</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Customer</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Status</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="recentRequests.length === 0">
+            <td colspan="6" class="px-4 py-3 text-center text-sm text-gray-500">No recent delivery requests found.</td>
+          </tr>
+          <tr *ngFor="let request of recentRequests">
+            <td class="border-b px-4 py-2">{{ request.id.substring(0, 8) }}</td>
+            <td class="border-b px-4 py-2">{{ formatDate(request.date) }}</td>
+            <td class="border-b px-4 py-2">{{ getClientName(request.clientId) }}</td>
+            <td class="border-b px-4 py-2">{{ getCustomerName(request.customerId) }}</td>
+            <td class="border-b px-4 py-2">
+              <span
+                [ngClass]="{
+                  'bg-yellow-100 text-yellow-800': request.deliveryStatus === 'pending',
+                  'bg-blue-100 text-blue-800': request.deliveryStatus === 'assigned',
+                  'bg-purple-100 text-purple-800': request.deliveryStatus === 'in-progress',
+                  'bg-green-100 text-green-800': request.deliveryStatus === 'completed',
+                  'bg-red-100 text-red-800': request.deliveryStatus === 'cancelled',
+                }"
+                class="inline-block rounded-full px-2 py-1 text-xs font-semibold"
+              >
+                {{ request.deliveryStatus | titlecase }}
+              </span>
+            </td>
+            <td class="border-b px-4 py-2">
+              <a [routerLink]="['/admin/requests', request.id]" class="text-blue-600 hover:underline">View Details</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pending Clients -->
+  <div *ngIf="pendingClients.length > 0" class="mb-6">
+    <h2 class="mb-3 text-xl font-semibold">Pending Client Approvals</h2>
+    <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Name</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Email</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Phone</th>
+            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of pendingClients">
+            <td class="border-b px-4 py-2">{{ client.name }}</td>
+            <td class="border-b px-4 py-2">{{ client.email }}</td>
+            <td class="border-b px-4 py-2">{{ client.phone }}</td>
+            <td class="border-b px-4 py-2">
+              <div class="flex space-x-2">
+                <button
+                  (click)="approveClient(client)"
+                  class="rounded bg-green-500 px-2 py-1 text-xs text-white hover:bg-green-600"
+                >
+                  Approve
+                </button>
+                <button
+                  (click)="rejectClient(client)"
+                  class="rounded bg-red-500 px-2 py-1 text-xs text-white hover:bg-red-600"
+                >
+                  Reject
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

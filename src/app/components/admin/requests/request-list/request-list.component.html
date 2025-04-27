@@ -1,0 +1,118 @@
+<div class="container mx-auto p-4">
+  <h1 class="mb-6 text-2xl font-bold">Delivery Requests</h1>
+
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-semibold">All Delivery Requests</h2>
+      <p class="text-gray-600">Total: {{ requests.length }}</p>
+    </div>
+
+    <div class="flex gap-2">
+      <div class="flex flex-col">
+        <label for="statusFilter" class="mb-1 text-xs text-gray-600">Status Filter</label>
+        <select
+          id="statusFilter"
+          [(ngModel)]="statusFilter"
+          (change)="applyFilters()"
+          class="rounded border border-gray-300 px-2 py-1 text-sm"
+        >
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="assigned">Assigned</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col">
+        <label for="paymentFilter" class="mb-1 text-xs text-gray-600">Payment Filter</label>
+        <select
+          id="paymentFilter"
+          [(ngModel)]="paymentFilter"
+          (change)="applyFilters()"
+          class="rounded border border-gray-300 px-2 py-1 text-sm"
+        >
+          <option value="all">All Payment Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-center py-8">
+    <div class="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+  </div>
+
+  <div *ngIf="!isLoading && filteredRequests.length === 0" class="rounded-md bg-gray-100 p-6 text-center">
+    <p class="text-gray-500">No delivery requests found</p>
+  </div>
+
+  <div *ngIf="!isLoading && filteredRequests.length > 0" class="overflow-x-auto">
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border px-4 py-2 text-left">ID</th>
+          <th class="border px-4 py-2 text-left">Date</th>
+          <th class="border px-4 py-2 text-left">Client</th>
+          <th class="border px-4 py-2 text-left">Customer</th>
+          <th class="border px-4 py-2 text-left">Driver</th>
+          <th class="border px-4 py-2 text-left">Status</th>
+          <th class="border px-4 py-2 text-left">Payment</th>
+          <th class="border px-4 py-2 text-left">Amount</th>
+          <th class="border px-4 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of filteredRequests">
+          <td class="border px-4 py-2">{{ request.id.substring(0, 8) }}</td>
+          <td class="border px-4 py-2">{{ formatDate(request.date) }}</td>
+          <td class="border px-4 py-2">{{ getClientName(request.clientId) }}</td>
+          <td class="border px-4 py-2">{{ getCustomerName(request.customerId) }}</td>
+          <td class="border px-4 py-2">
+            {{ request.driverId ? getDriverName(request.driverId) : 'Not Assigned' }}
+          </td>
+          <td class="border px-4 py-2">
+            <span
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-800': request.deliveryStatus === 'pending',
+                'bg-blue-100 text-blue-800': request.deliveryStatus === 'assigned',
+                'bg-purple-100 text-purple-800': request.deliveryStatus === 'in-progress',
+                'bg-green-100 text-green-800': request.deliveryStatus === 'completed',
+                'bg-red-100 text-red-800': request.deliveryStatus === 'cancelled',
+              }"
+              class="inline-block rounded-full px-2 py-1 text-xs font-semibold"
+            >
+              {{ request.deliveryStatus | titlecase }}
+            </span>
+          </td>
+          <td class="border px-4 py-2">
+            <span
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-800': request.paymentStatus === 'pending',
+                'bg-green-100 text-green-800': request.paymentStatus === 'paid',
+                'bg-red-100 text-red-800': request.paymentStatus === 'cancelled',
+              }"
+              class="inline-block rounded-full px-2 py-1 text-xs font-semibold"
+            >
+              {{ request.paymentStatus | titlecase }}
+            </span>
+          </td>
+          <td class="border px-4 py-2">{{ request.paymentAmount | currency }}</td>
+          <td class="border px-4 py-2">
+            <div class="flex space-x-2">
+              <a
+                [routerLink]="['/admin/requests', request.id]"
+                class="rounded bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600"
+              >
+                View Details
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

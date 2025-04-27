@@ -1,0 +1,305 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Client } from '../../../models/client.model';
+import { Customer } from '../../../models/customer.model';
+import { DeliveryRequest } from '../../../models/delivery-request.model';
+import { ClientService } from '../../../services/client.service';
+import { CustomerService } from '../../../services/customer.service';
+import { DeliveryService } from '../../../services/delivery.service';
+import { NotificationService } from '../../../shared/services/notification.service';
+
+@Component({
+  selector: 'app-driver-request-details',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  template: `
+    <div class="container mx-auto p-4">
+      <div class="mb-4 flex items-center">
+        <button
+          routerLink="/driver/requests"
+          class="mr-4 flex items-center text-blue-600 hover:text-blue-800"
+        >
+          <span class="text-xl">&larr;</span>
+          <span class="ml-1">Back to Assignments</span>
+        </button>
+        <h1 class="text-2xl font-bold">Delivery Details</h1>
+      </div>
+
+      <div *ngIf="isLoading" class="py-8 text-center text-gray-600">
+        <p>Loading delivery details...</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="mb-4 rounded-md bg-red-100 p-4 text-red-700">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="!isLoading && request" class="space-y-6">
+        <!-- Status Banner -->
+        <div
+          class="rounded-md p-4"
+          [ngClass]="{
+            'bg-yellow-100 text-yellow-800': request.deliveryStatus === 'pending',
+            'bg-blue-100 text-blue-800': request.deliveryStatus === 'assigned',
+            'bg-purple-100 text-purple-800': request.deliveryStatus === 'in-progress',
+            'bg-green-100 text-green-800': request.deliveryStatus === 'completed',
+            'bg-red-100 text-red-800': request.deliveryStatus === 'cancelled',
+          }"
+        >
+          <div class="flex items-center">
+            <span class="text-lg font-medium"
+              >Status: {{ request.deliveryStatus | titlecase }}</span
+            >
+            <span class="mx-2">•</span>
+            <span>Payment: {{ request.paymentStatus | titlecase }}</span>
+          </div>
+        </div>
+
+        <!-- Request Info -->
+        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 class="mb-4 text-lg font-medium">Delivery Information</h2>
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Request ID</p>
+              <p class="text-gray-900">{{ request.id }}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500">Date</p>
+              <p class="text-gray-900">{{ request.date }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-sm font-medium text-gray-500">Delivery Details</p>
+              <p class="whitespace-pre-wrap text-gray-900">{{ request.deliveryDetails }}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500">Payment Amount</p>
+              <p class="text-gray-900">\${{ request.paymentAmount.toFixed(2) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Info -->
+        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 class="mb-4 text-lg font-medium">Customer Information</h2>
+          <div *ngIf="customer" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Customer Name</p>
+              <p class="text-gray-900">{{ customer.name }}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500">Contact</p>
+              <p class="text-gray-900">{{ customer.phone }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-sm font-medium text-gray-500">Delivery Address</p>
+              <p class="text-gray-900">{{ customer.address }}</p>
+            </div>
+          </div>
+          <div *ngIf="!customer" class="rounded-md bg-yellow-50 p-3">
+            <p class="text-sm text-yellow-700">Customer information not available</p>
+          </div>
+        </div>
+
+        <!-- Client Info -->
+        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 class="mb-4 text-lg font-medium">Client Information</h2>
+          <div *ngIf="client" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Client Name</p>
+              <p class="text-gray-900">{{ client.name }}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500">Contact</p>
+              <p class="text-gray-900">{{ client.phone }}</p>
+            </div>
+          </div>
+          <div *ngIf="!client" class="rounded-md bg-yellow-50 p-3">
+            <p class="text-sm text-yellow-700">Client information not available</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 class="mb-4 text-lg font-medium">Delivery Actions</h2>
+          <div class="flex flex-wrap gap-4">
+            <button
+              *ngIf="request.deliveryStatus === 'assigned'"
+              (click)="updateDeliveryStatus('in-progress')"
+              class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Start Delivery
+            </button>
+            <button
+              *ngIf="request.deliveryStatus === 'in-progress'"
+              (click)="updateDeliveryStatus('completed')"
+              class="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+            >
+              Mark as Completed
+            </button>
+            <button
+              *ngIf="request.deliveryStatus === 'assigned'"
+              (click)="cancelDelivery()"
+              class="rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50"
+            >
+              Cancel Delivery
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+})
+export class DriverRequestDetailsComponent implements OnInit {
+  requestId = '';
+  request: DeliveryRequest | undefined;
+  customer: Customer | undefined;
+  client: Client | undefined;
+
+  isLoading = true;
+  errorMessage = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private deliveryService: DeliveryService,
+    private customerService: CustomerService,
+    private clientService: ClientService,
+    private notificationService: NotificationService,
+  ) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.requestId = params['id'];
+      this.loadRequestDetails();
+    });
+  }
+
+  loadRequestDetails(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.deliveryService.getDeliveryRequestById(this.requestId).subscribe({
+      next: (request) => {
+        if (request) {
+          this.request = request;
+          this.loadCustomer(request.customerId);
+          this.loadClient(request.clientId);
+        } else {
+          this.errorMessage = 'Delivery request not found.';
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading request details:', error);
+        this.errorMessage = 'Error loading request details.';
+        this.isLoading = false;
+      },
+    });
+  }
+
+  loadCustomer(customerId: string): void {
+    this.customerService.getCustomerById(customerId).subscribe({
+      next: (customer) => {
+        this.customer = customer;
+      },
+      error: (error) => {
+        console.error('Error loading customer details:', error);
+      },
+    });
+  }
+
+  loadClient(clientId: string): void {
+    this.clientService.getClientById(clientId).subscribe({
+      next: (client) => {
+        this.client = client;
+      },
+      error: (error) => {
+        console.error('Error loading client details:', error);
+      },
+    });
+  }
+
+  updateDeliveryStatus(status: 'in-progress' | 'completed'): void {
+    if (!this.request) return;
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.deliveryService.updateDeliveryStatus(this.request.id, status).subscribe({
+      next: (updatedRequest) => {
+        if (updatedRequest) {
+          if (status === 'completed') {
+            // If delivery is completed, also update payment status to 'paid'
+            this.deliveryService.updatePaymentStatus(this.request!.id, 'paid').subscribe({
+              next: () => {
+                this.notificationService.showSuccess(
+                  'Delivery marked as completed and payment processed',
+                );
+                this.router.navigate(['/driver/requests']);
+              },
+              error: (error) => {
+                console.error('Error updating payment status:', error);
+                this.errorMessage = 'Error updating payment status.';
+                this.notificationService.showError('Error updating payment status');
+                this.isLoading = false;
+              },
+            });
+          } else {
+            this.notificationService.showSuccess('Delivery status updated to in-progress');
+            this.router.navigate(['/driver/requests']);
+          }
+        } else {
+          this.errorMessage = 'Failed to update delivery status.';
+          this.notificationService.showError('Failed to update delivery status');
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error updating delivery status:', error);
+        this.errorMessage = 'Error updating delivery status.';
+        this.notificationService.showError('Error updating delivery status');
+        this.isLoading = false;
+      },
+    });
+  }
+
+  cancelDelivery(): void {
+    if (!this.request) return;
+
+    if (confirm('Are you sure you want to cancel this delivery?')) {
+      this.isLoading = true;
+      this.errorMessage = '';
+
+      this.deliveryService.updateDeliveryStatus(this.request.id, 'pending').subscribe({
+        next: (updatedRequest) => {
+          if (updatedRequest) {
+            // Update driver ID to null (performed on server in a real app)
+            this.request!.driverId = undefined;
+            this.deliveryService.updateDeliveryRequest(this.request!).subscribe({
+              next: () => {
+                this.notificationService.showSuccess('Delivery cancelled successfully');
+                this.router.navigate(['/driver/requests']);
+              },
+              error: (error) => {
+                console.error('Error removing driver assignment:', error);
+                this.errorMessage = 'Error removing driver assignment.';
+                this.notificationService.showError('Error removing driver assignment');
+                this.isLoading = false;
+              },
+            });
+          } else {
+            this.errorMessage = 'Failed to cancel delivery.';
+            this.notificationService.showError('Failed to cancel delivery');
+            this.isLoading = false;
+          }
+        },
+        error: (error) => {
+          console.error('Error canceling delivery:', error);
+          this.errorMessage = 'Error canceling delivery.';
+          this.notificationService.showError('Error canceling delivery');
+          this.isLoading = false;
+        },
+      });
+    }
+  }
+}

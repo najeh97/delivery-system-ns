@@ -1,0 +1,194 @@
+<div class="container mx-auto p-4">
+  <div class="mb-4">
+    <a routerLink="/admin/requests" class="text-blue-600 hover:underline">← Back to Requests</a>
+  </div>
+
+  <h1 class="mb-6 text-2xl font-bold">Delivery Request Details</h1>
+
+  <div *ngIf="isLoading" class="flex justify-center py-8">
+    <div class="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+  </div>
+
+  <div *ngIf="errorMessage" class="mb-4 rounded-md bg-red-100 p-4 text-sm text-red-700">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && request">
+    <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div class="rounded-lg border bg-white p-6 shadow-sm">
+        <h2 class="mb-4 text-xl font-semibold">Request Information</h2>
+        <div class="mb-2">
+          <span class="text-sm font-medium text-gray-500">Request ID:</span>
+          <p class="text-gray-800">{{ request.id }}</p>
+        </div>
+        <div class="mb-2">
+          <span class="text-sm font-medium text-gray-500">Date:</span>
+          <p class="text-gray-800">{{ formatDate(request.date) }}</p>
+        </div>
+        <div class="mb-2">
+          <span class="text-sm font-medium text-gray-500">Details:</span>
+          <p class="text-gray-800">{{ request.deliveryDetails }}</p>
+        </div>
+        <div class="mb-2">
+          <span class="text-sm font-medium text-gray-500">Status:</span>
+          <p>
+            <span
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-800': request.deliveryStatus === 'pending',
+                'bg-blue-100 text-blue-800': request.deliveryStatus === 'assigned',
+                'bg-purple-100 text-purple-800': request.deliveryStatus === 'in-progress',
+                'bg-green-100 text-green-800': request.deliveryStatus === 'completed',
+                'bg-red-100 text-red-800': request.deliveryStatus === 'cancelled',
+              }"
+              class="inline-block rounded-full px-2 py-1 text-xs font-semibold"
+            >
+              {{ request.deliveryStatus | titlecase }}
+            </span>
+          </p>
+        </div>
+        <div class="mb-2">
+          <span class="text-sm font-medium text-gray-500">Payment Status:</span>
+          <p>
+            <span
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-800': request.paymentStatus === 'pending',
+                'bg-green-100 text-green-800': request.paymentStatus === 'paid',
+                'bg-red-100 text-red-800': request.paymentStatus === 'cancelled',
+              }"
+              class="inline-block rounded-full px-2 py-1 text-xs font-semibold"
+            >
+              {{ request.paymentStatus | titlecase }}
+            </span>
+          </p>
+        </div>
+        <div class="mb-2">
+          <span class="text-sm font-medium text-gray-500">Payment Amount:</span>
+          <p class="text-gray-800">{{ request.paymentAmount | currency }}</p>
+        </div>
+      </div>
+
+      <div class="rounded-lg border bg-white p-6 shadow-sm">
+        <h2 class="mb-4 text-xl font-semibold">Client & Customer Info</h2>
+        <div class="mb-4">
+          <h3 class="mb-1 font-medium text-gray-700">Client Information</h3>
+          <p class="mb-1">Name: {{ clientName }}</p>
+          <p class="mb-1">Email: {{ clientEmail }}</p>
+          <p class="mb-1">Phone: {{ clientPhone }}</p>
+        </div>
+        <div class="mb-4">
+          <h3 class="mb-1 font-medium text-gray-700">Customer Information</h3>
+          <p class="mb-1">Name: {{ customerName }}</p>
+          <p class="mb-1">Email: {{ customerEmail }}</p>
+          <p class="mb-1">Phone: {{ customerPhone }}</p>
+          <p class="mb-1">Address: {{ customerAddress }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Driver Assignment -->
+    <div class="mb-8 rounded-lg border bg-white p-6 shadow-sm">
+      <h2 class="mb-4 text-xl font-semibold">Driver Assignment</h2>
+
+      <div *ngIf="request.driverId; else noDriver">
+        <div class="mb-4">
+          <p class="mb-1"><span class="font-medium">Assigned Driver:</span> {{ driverName }}</p>
+          <p class="mb-1"><span class="font-medium">Vehicle Type:</span> {{ driverVehicleType }}</p>
+          <p class="mb-1"><span class="font-medium">Vehicle Model:</span> {{ driverVehicleModel }}</p>
+        </div>
+
+        <button
+          *ngIf="request.deliveryStatus !== 'completed' && request.deliveryStatus !== 'cancelled'"
+          (click)="showDriverAssignment = true"
+          class="rounded-md bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600"
+        >
+          Reassign Driver
+        </button>
+      </div>
+
+      <ng-template #noDriver>
+        <p *ngIf="!showDriverAssignment" class="mb-4 text-gray-500">No driver has been assigned yet.</p>
+        <button
+          *ngIf="!showDriverAssignment"
+          (click)="showDriverAssignment = true"
+          class="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          Assign Driver
+        </button>
+      </ng-template>
+
+      <div *ngIf="showDriverAssignment" class="mt-4 rounded border border-gray-200 bg-gray-50 p-4">
+        <h3 class="mb-3 text-lg font-medium">Select Driver</h3>
+
+        <div *ngIf="availableDrivers.length === 0" class="mb-3 text-gray-500">No drivers available for assignment.</div>
+
+        <div *ngIf="availableDrivers.length > 0" class="mb-3">
+          <label for="driverSelect" class="mb-1 block text-sm font-medium">Choose Driver:</label>
+          <select
+            id="driverSelect"
+            [(ngModel)]="selectedDriverId"
+            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            required
+          >
+            <option [ngValue]="null" disabled>Select a driver</option>
+            <option *ngFor="let driver of availableDrivers" [value]="driver.id">
+              {{ driver.name }} ({{ driver.vehicleType }} - {{ driver.modelName }})
+            </option>
+          </select>
+        </div>
+
+        <div class="flex gap-2">
+          <button
+            (click)="assignDriver()"
+            [disabled]="!selectedDriverId"
+            class="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:bg-blue-400"
+          >
+            Assign
+          </button>
+          <button
+            (click)="showDriverAssignment = false"
+            class="rounded-md bg-gray-300 px-4 py-2 text-gray-800 hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Delivery Status -->
+    <div class="mb-8 rounded-lg border bg-white p-6 shadow-sm">
+      <h2 class="mb-4 text-xl font-semibold">Update Status</h2>
+
+      <div class="mb-4">
+        <label for="deliveryStatus" class="mb-1 block text-sm font-medium">Delivery Status:</label>
+        <select
+          id="deliveryStatus"
+          [(ngModel)]="request.deliveryStatus"
+          class="rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        >
+          <option value="pending">Pending</option>
+          <option value="assigned">Assigned</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="paymentStatus" class="mb-1 block text-sm font-medium">Payment Status:</label>
+        <select
+          id="paymentStatus"
+          [(ngModel)]="request.paymentStatus"
+          class="rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+        >
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <button (click)="updateRequest()" class="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700">
+        Update Request
+      </button>
+    </div>
+  </div>
+</div>

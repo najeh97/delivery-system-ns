@@ -32,6 +32,76 @@ export const routes: Routes = [
             (c) => c.AdminDashboardComponent,
           ),
       },
+      {
+        path: 'drivers',
+        loadComponent: () =>
+          import('./components/admin/drivers/driver-list/driver-list.component').then(
+            (c) => c.DriverListComponent,
+          ),
+      },
+      {
+        path: 'drivers/add',
+        loadComponent: () =>
+          import('./components/admin/drivers/add-driver/add-driver.component').then(
+            (c) => c.AddDriverComponent,
+          ),
+      },
+      {
+        path: 'drivers/:id',
+        loadComponent: () =>
+          import('./components/admin/drivers/driver-details/driver-details.component').then(
+            (c) => c.DriverDetailsComponent,
+          ),
+      },
+      {
+        path: 'clients',
+        loadComponent: () =>
+          import('./components/admin/clients/client-list/client-list.component').then(
+            (c) => c.ClientListComponent,
+          ),
+      },
+      {
+        path: 'clients/:id',
+        loadComponent: () =>
+          import('./components/admin/clients/client-details/client-details.component').then(
+            (c) => c.ClientDetailsComponent,
+          ),
+      },
+      {
+        path: 'clients/edit/:id',
+        loadComponent: () =>
+          import('./components/admin/clients/client-edit/client-edit.component').then(
+            (c) => c.ClientEditComponent,
+          ),
+      },
+      {
+        path: 'customers',
+        loadComponent: () =>
+          import('./components/admin/customers/customer-list/customer-list.component').then(
+            (c) => c.CustomerListComponent,
+          ),
+      },
+      {
+        path: 'customers/:id',
+        loadComponent: () =>
+          import('./components/admin/customers/customer-details/customer-details.component').then(
+            (c) => c.CustomerDetailsComponent,
+          ),
+      },
+      {
+        path: 'requests',
+        loadComponent: () =>
+          import('./components/admin/requests/request-list/request-list.component').then(
+            (c) => c.RequestListComponent,
+          ),
+      },
+      {
+        path: 'requests/:id',
+        loadComponent: () =>
+          import('./components/admin/requests/request-details/request-details.component').then(
+            (c) => c.RequestDetailsComponent,
+          ),
+      },
     ],
   },
 
@@ -47,6 +117,48 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./components/client/dashboard/client-dashboard.component').then(
             (c) => c.ClientDashboardComponent,
+          ),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/client/profile/client-profile.component').then(
+            (c) => c.ClientProfileComponent,
+          ),
+      },
+      {
+        path: 'drivers',
+        loadComponent: () =>
+          import('./components/client/drivers/driver-list.component').then(
+            (c) => c.ClientDriverListComponent,
+          ),
+      },
+      {
+        path: 'requests',
+        loadComponent: () =>
+          import('./components/client/requests/request-list.component').then(
+            (c) => c.ClientRequestListComponent,
+          ),
+      },
+      {
+        path: 'requests/new',
+        loadComponent: () =>
+          import('./components/client/requests/create-request.component').then(
+            (c) => c.CreateRequestComponent,
+          ),
+      },
+      {
+        path: 'requests/:id',
+        loadComponent: () =>
+          import('./components/client/requests/request-details.component').then(
+            (c) => c.ClientRequestDetailsComponent,
+          ),
+      },
+      {
+        path: 'payments',
+        loadComponent: () =>
+          import('./components/client/payments/payment-list.component').then(
+            (c) => c.PaymentListComponent,
           ),
       },
     ],
@@ -66,10 +178,31 @@ export const routes: Routes = [
             (c) => c.CustomerDashboardComponent,
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/customer/profile/customer-profile.component').then(
+            (c) => c.CustomerProfileComponent,
+          ),
+      },
+      {
+        path: 'requests',
+        loadComponent: () =>
+          import('./components/customer/requests/request-list/request-list.component').then(
+            (c) => c.CustomerRequestListComponent,
+          ),
+      },
+      {
+        path: 'requests/:id',
+        loadComponent: () =>
+          import('./components/customer/requests/request-details/request-details.component').then(
+            (c) => c.CustomerRequestDetailsComponent,
+          ),
+      },
     ],
   },
 
-  //   // Driver routes
+  // Driver routes
   {
     path: 'driver',
     canActivate: [AuthGuard],
@@ -81,6 +214,34 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./components/driver/dashboard/driver-dashboard.component').then(
             (c) => c.DriverDashboardComponent,
+          ),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/driver/profile/driver-profile.component').then(
+            (c) => c.DriverProfileComponent,
+          ),
+      },
+      {
+        path: 'requests',
+        loadComponent: () =>
+          import('./components/driver/requests/request-list/request-list.component').then(
+            (c) => c.DriverRequestListComponent,
+          ),
+      },
+      {
+        path: 'requests/:id',
+        loadComponent: () =>
+          import('./components/driver/requests/request-details/request-details.component').then(
+            (c) => c.DriverRequestDetailsComponent,
+          ),
+      },
+      {
+        path: 'payments',
+        loadComponent: () =>
+          import('./components/driver/payments/payment-list/payment-list.component').then(
+            (c) => c.DriverPaymentListComponent,
           ),
       },
     ],

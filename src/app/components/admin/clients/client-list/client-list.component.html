@@ -1,0 +1,149 @@
+<div class="container mx-auto p-4">
+  <h1 class="mb-6 text-2xl font-bold">Client Management</h1>
+
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-semibold">All Clients</h2>
+      <p class="text-gray-600">Total: {{ clients.length }}</p>
+    </div>
+
+    <div class="flex gap-2">
+      <button
+        (click)="filterClients('all')"
+        [class.bg-blue-600]="filter === 'all'"
+        [class.bg-gray-200]="filter !== 'all'"
+        class="rounded-md px-3 py-1 text-sm font-medium"
+        [class.text-white]="filter === 'all'"
+        [class.text-gray-800]="filter !== 'all'"
+      >
+        All
+      </button>
+      <button
+        (click)="filterClients('pending')"
+        [class.bg-yellow-500]="filter === 'pending'"
+        [class.bg-gray-200]="filter !== 'pending'"
+        class="rounded-md px-3 py-1 text-sm font-medium"
+        [class.text-white]="filter === 'pending'"
+        [class.text-gray-800]="filter !== 'pending'"
+      >
+        Pending
+      </button>
+      <button
+        (click)="filterClients('approved')"
+        [class.bg-green-600]="filter === 'approved'"
+        [class.bg-gray-200]="filter !== 'approved'"
+        class="rounded-md px-3 py-1 text-sm font-medium"
+        [class.text-white]="filter === 'approved'"
+        [class.text-gray-800]="filter !== 'approved'"
+      >
+        Approved
+      </button>
+      <button
+        (click)="filterClients('rejected')"
+        [class.bg-red-600]="filter === 'rejected'"
+        [class.bg-gray-200]="filter !== 'rejected'"
+        class="rounded-md px-3 py-1 text-sm font-medium"
+        [class.text-white]="filter === 'rejected'"
+        [class.text-gray-800]="filter !== 'rejected'"
+      >
+        Rejected
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-center py-8">
+    <div class="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+  </div>
+
+  <div *ngIf="!isLoading && clients.length === 0" class="rounded-md bg-gray-100 p-6 text-center">
+    <p class="text-gray-500">No clients found</p>
+  </div>
+
+  <div *ngIf="!isLoading && clients.length > 0" class="overflow-x-auto">
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border px-4 py-2 text-left">Name</th>
+          <th class="border px-4 py-2 text-left">Email</th>
+          <th class="border px-4 py-2 text-left">Phone</th>
+          <th class="border px-4 py-2 text-left">Address</th>
+          <th class="border px-4 py-2 text-left">Bank Info</th>
+          <th class="border px-4 py-2 text-left">Status</th>
+          <th class="border px-4 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of filteredClients">
+          <td class="border px-4 py-2">{{ client.name }}</td>
+          <td class="border px-4 py-2">{{ client.email }}</td>
+          <td class="border px-4 py-2">{{ client.phone }}</td>
+          <td class="border px-4 py-2">{{ client.address }}</td>
+          <td class="border px-4 py-2">{{ client.bankName }}, {{ client.bankAccount }}</td>
+          <td class="border px-4 py-2">
+            <span
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-800': client.approvalStatus === 'pending',
+                'bg-green-100 text-green-800': client.approvalStatus === 'approved',
+                'bg-red-100 text-red-800': client.approvalStatus === 'rejected',
+              }"
+              class="inline-block rounded-full px-2 py-1 text-xs font-semibold"
+            >
+              {{ client.approvalStatus | titlecase }}
+            </span>
+          </td>
+          <td class="border px-4 py-2">
+            <div class="flex space-x-2">
+              <a
+                [routerLink]="['/admin/clients', client.id]"
+                class="rounded bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600"
+              >
+                View Details
+              </a>
+              <a
+                [routerLink]="['/admin/clients/edit', client.id]"
+                class="rounded bg-green-500 px-2 py-1 text-xs text-white hover:bg-green-600"
+              >
+                Edit
+              </a>
+              <button
+                (click)="deleteClient(client)"
+                class="rounded bg-red-500 px-2 py-1 text-xs text-white hover:bg-red-600"
+              >
+                Delete
+              </button>
+
+              <button
+                *ngIf="client.approvalStatus === 'pending'"
+                (click)="approveClient(client)"
+                class="rounded bg-green-500 px-2 py-1 text-xs text-white hover:bg-green-600"
+              >
+                Approve
+              </button>
+              <button
+                *ngIf="client.approvalStatus === 'pending'"
+                (click)="rejectClient(client)"
+                class="rounded bg-red-500 px-2 py-1 text-xs text-white hover:bg-red-600"
+              >
+                Reject
+              </button>
+              <button
+                *ngIf="client.approvalStatus === 'rejected'"
+                (click)="approveClient(client)"
+                class="rounded bg-green-500 px-2 py-1 text-xs text-white hover:bg-green-600"
+              >
+                Approve
+              </button>
+              <button
+                *ngIf="client.approvalStatus === 'approved'"
+                (click)="rejectClient(client)"
+                class="rounded bg-red-500 px-2 py-1 text-xs text-white hover:bg-red-600"
+              >
+                Reject
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
