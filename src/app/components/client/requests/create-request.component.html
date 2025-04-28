@@ -16,7 +16,7 @@
           name="customerId"
           [(ngModel)]="request.customerId"
           required
-          class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
         >
           <option [ngValue]="''" disabled>Select a customer</option>
           <option *ngFor="let customer of customers" [value]="customer.id">
@@ -41,7 +41,7 @@
           [(ngModel)]="request.deliveryDetails"
           required
           rows="3"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
           placeholder="Describe the items to be delivered, special instructions, etc."
         ></textarea>
       </div>
@@ -55,7 +55,7 @@
           [(ngModel)]="deliveryDate"
           required
           [min]="minDate"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
         />
       </div>
 
@@ -69,7 +69,7 @@
           required
           min="0"
           step="0.01"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
           placeholder="0.00"
         />
       </div>
@@ -84,7 +84,7 @@
           id="driverId"
           name="driverId"
           [(ngModel)]="request.driverId"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
         >
           <option [ngValue]="undefined">Select a driver (optional)</option>
           <option *ngFor="let driver of drivers" [value]="driver.id">
@@ -102,7 +102,7 @@
       <button
         type="button"
         routerLink="/client/requests"
-        class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+        class="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
       >
         Cancel
       </button>

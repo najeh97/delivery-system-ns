@@ -5,7 +5,7 @@
 
   <!-- Stats Cards -->
   <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-    <div class="rounded-lg border bg-white p-4 shadow-sm">
+    <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <h2 class="text-sm font-medium text-gray-500">Total Clients</h2>
       <p class="mt-2 text-3xl font-semibold">{{ clients.length }}</p>
       <div class="mt-2">
@@ -15,17 +15,17 @@
       </div>
     </div>
 
-    <div class="rounded-lg border bg-white p-4 shadow-sm">
+    <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <h2 class="text-sm font-medium text-gray-500">Total Customers</h2>
       <p class="mt-2 text-3xl font-semibold">{{ customers.length }}</p>
     </div>
 
-    <div class="rounded-lg border bg-white p-4 shadow-sm">
+    <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <h2 class="text-sm font-medium text-gray-500">Total Drivers</h2>
       <p class="mt-2 text-3xl font-semibold">{{ drivers.length }}</p>
     </div>
 
-    <div class="rounded-lg border bg-white p-4 shadow-sm">
+    <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <h2 class="text-sm font-medium text-gray-500">Total Delivery Requests</h2>
       <p class="mt-2 text-3xl font-semibold">{{ requests.length }}</p>
       <div class="mt-2">
@@ -227,16 +227,16 @@
   <!-- Recent Activity -->
   <div class="mb-6">
     <h2 class="mb-3 text-xl font-semibold">Recent Delivery Requests</h2>
-    <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
+    <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
       <table class="w-full table-auto">
         <thead>
           <tr class="bg-gray-50">
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">ID</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Date</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Client</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Customer</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Status</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">ID</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Date</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Client</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Customer</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Status</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -244,11 +244,11 @@
             <td colspan="6" class="px-4 py-3 text-center text-sm text-gray-500">No recent delivery requests found.</td>
           </tr>
           <tr *ngFor="let request of recentRequests">
-            <td class="border-b px-4 py-2">{{ request.id.substring(0, 8) }}</td>
-            <td class="border-b px-4 py-2">{{ formatDate(request.date) }}</td>
-            <td class="border-b px-4 py-2">{{ getClientName(request.clientId) }}</td>
-            <td class="border-b px-4 py-2">{{ getCustomerName(request.customerId) }}</td>
-            <td class="border-b px-4 py-2">
+            <td class="border-b border-gray-200 px-4 py-2">{{ request.id.substring(0, 8) }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ formatDate(request.date) }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ getClientName(request.clientId) }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ getCustomerName(request.customerId) }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">
               <span
                 [ngClass]="{
                   'bg-yellow-100 text-yellow-800': request.deliveryStatus === 'pending',
@@ -262,7 +262,7 @@
                 {{ request.deliveryStatus | titlecase }}
               </span>
             </td>
-            <td class="border-b px-4 py-2">
+            <td class="border-b border-gray-200 px-4 py-2">
               <a [routerLink]="['/admin/requests', request.id]" class="text-blue-600 hover:underline">View Details</a>
             </td>
           </tr>
@@ -274,22 +274,22 @@
   <!-- Pending Clients -->
   <div *ngIf="pendingClients.length > 0" class="mb-6">
     <h2 class="mb-3 text-xl font-semibold">Pending Client Approvals</h2>
-    <div class="overflow-x-auto rounded-lg border bg-white shadow-sm">
+    <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
       <table class="w-full table-auto">
         <thead>
           <tr class="bg-gray-50">
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Name</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Email</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Phone</th>
-            <th class="border-b px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Name</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Email</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Phone</th>
+            <th class="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let client of pendingClients">
-            <td class="border-b px-4 py-2">{{ client.name }}</td>
-            <td class="border-b px-4 py-2">{{ client.email }}</td>
-            <td class="border-b px-4 py-2">{{ client.phone }}</td>
-            <td class="border-b px-4 py-2">
+          <tr *ngFor="let client of pendingClients" class="border-gray-200">
+            <td class="border-b border-gray-200 px-4 py-2">{{ client.name }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ client.email }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ client.phone }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">
               <div class="flex space-x-2">
                 <button
                   (click)="approveClient(client)"

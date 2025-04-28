@@ -63,22 +63,22 @@
     <table class="w-full table-auto border-collapse">
       <thead>
         <tr class="bg-gray-100">
-          <th class="border px-4 py-2 text-left">Name</th>
-          <th class="border px-4 py-2 text-left">Email</th>
-          <th class="border px-4 py-2 text-left">Phone</th>
-          <th class="border px-4 py-2 text-left">Vehicle Type</th>
-          <th class="border px-4 py-2 text-left">Vehicle Model</th>
-          <th class="border px-4 py-2 text-left">Actions</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Name</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Email</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Phone</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Vehicle Type</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Vehicle Model</th>
+          <th class="border border-gray-200 px-4 py-2 text-left">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let driver of filteredDrivers">
-          <td class="border px-4 py-2">{{ driver.name }}</td>
-          <td class="border px-4 py-2">{{ driver.email }}</td>
-          <td class="border px-4 py-2">{{ driver.phone }}</td>
-          <td class="border px-4 py-2">{{ driver.vehicleType }}</td>
-          <td class="border px-4 py-2">{{ driver.modelName }}</td>
-          <td class="border px-4 py-2">
+          <td class="border border-gray-200 px-4 py-2">{{ driver.name }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ driver.email }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ driver.phone }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ driver.vehicleType }}</td>
+          <td class="border border-gray-200 px-4 py-2">{{ driver.modelName }}</td>
+          <td class="border border-gray-200 px-4 py-2">
             <div class="flex space-x-2">
               <a
                 [routerLink]="['/admin/drivers', driver.id]"

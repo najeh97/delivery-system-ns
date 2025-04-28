@@ -19,7 +19,7 @@
 
   <div *ngIf="!isLoading && client">
     <!-- Profile Status -->
-    <div class="mb-6 rounded-lg border bg-white p-4 shadow-sm">
+    <div class="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-xl font-semibold">Account Status</h2>
@@ -51,7 +51,11 @@
     </div>
 
     <!-- Edit Profile Form -->
-    <form (ngSubmit)="updateProfile()" #profileForm="ngForm" class="mb-6 rounded-lg border bg-white p-6 shadow-sm">
+    <form
+      (ngSubmit)="updateProfile()"
+      #profileForm="ngForm"
+      class="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+    >
       <h2 class="mb-4 text-xl font-semibold">Personal Information</h2>
 
       <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -63,7 +67,7 @@
             name="name"
             [(ngModel)]="client.name"
             required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
             placeholder="John Doe"
           />
         </div>
@@ -76,7 +80,7 @@
             name="email"
             [(ngModel)]="client.email"
             required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
             placeholder="john@example.com"
           />
         </div>
@@ -89,7 +93,7 @@
             name="phone"
             [(ngModel)]="client.phone"
             required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
             placeholder="+1234567890"
           />
         </div>
@@ -102,7 +106,7 @@
             name="address"
             [(ngModel)]="client.address"
             required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
             placeholder="123 Main St, City, Country"
           />
         </div>
@@ -119,7 +123,7 @@
             name="bankName"
             [(ngModel)]="client.bankName"
             required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
             placeholder="Bank Name"
           />
         </div>
@@ -132,7 +136,7 @@
             name="bankAccount"
             [(ngModel)]="client.bankAccount"
             required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            class="w-full rounded-md border border-gray-200 px-3 py-2 focus:border-blue-500 focus:outline-none"
             placeholder="Account Number"
           />
         </div>

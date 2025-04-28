@@ -24,7 +24,7 @@
         type="text"
         id="name"
         formControlName="name"
-        class="w-full rounded-md border border-gray-300 p-2"
+        class="w-full rounded-md border border-gray-200 p-2"
         placeholder="Client Name"
       />
       <div *ngIf="clientForm.get('name')?.invalid && clientForm.get('name')?.touched" class="mt-1 text-sm text-red-600">
@@ -38,7 +38,7 @@
         type="email"
         id="email"
         formControlName="email"
-        class="w-full rounded-md border border-gray-300 p-2"
+        class="w-full rounded-md border border-gray-200 p-2"
         placeholder="Email Address"
       />
       <div
@@ -55,7 +55,7 @@
         type="tel"
         id="phone"
         formControlName="phone"
-        class="w-full rounded-md border border-gray-300 p-2"
+        class="w-full rounded-md border border-gray-200 p-2"
         placeholder="Phone Number"
       />
       <div
@@ -72,7 +72,7 @@
         type="text"
         id="address"
         formControlName="address"
-        class="w-full rounded-md border border-gray-300 p-2"
+        class="w-full rounded-md border border-gray-200 p-2"
         placeholder="Address"
       />
       <div
@@ -89,7 +89,7 @@
         type="text"
         id="bankName"
         formControlName="bankName"
-        class="w-full rounded-md border border-gray-300 p-2"
+        class="w-full rounded-md border border-gray-200 p-2"
         placeholder="Bank Name"
       />
       <div
@@ -106,7 +106,7 @@
         type="text"
         id="bankAccount"
         formControlName="bankAccount"
-        class="w-full rounded-md border border-gray-300 p-2"
+        class="w-full rounded-md border border-gray-200 p-2"
         placeholder="Bank Account Number"
       />
       <div
@@ -119,7 +119,7 @@
 
     <div class="mb-4">
       <label for="approvalStatus" class="mb-2 block text-sm font-bold text-gray-700">Approval Status</label>
-      <select id="approvalStatus" formControlName="approvalStatus" class="w-full rounded-md border border-gray-300 p-2">
+      <select id="approvalStatus" formControlName="approvalStatus" class="w-full rounded-md border border-gray-200 p-2">
         <option value="pending">Pending</option>
         <option value="approved">Approved</option>
         <option value="rejected">Rejected</option>
